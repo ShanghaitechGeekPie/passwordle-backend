@@ -2,7 +2,7 @@ stages:
   - build
 build-server:
   stage: build
-  image: gcr.io/kaniko-project/executor
+  image: gcr.io/kaniko-project/executor:debug
   variables:
     CI_REGISTRY_USER_WITHDOLLAR: $CI_REGISTRY_USER
   script:
