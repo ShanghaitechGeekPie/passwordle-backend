@@ -28,9 +28,9 @@ async fn main() -> anyhow::Result<()> {
     let client = Arc::new(client);
 
     let app = Router::new()
-        .route("/games/:id", get(show_game_status))
-        .route("/guess/:id/", post(guess_post))
-        .route("/create", post(game_create_post))
+        .route("/api/games/:id", get(show_game_status))
+        .route("/api/guess/:id/", post(guess_post))
+        .route("/api/create", post(game_create_post))
         .layer(Extension(client));
 
     axum::Server::bind(&config.bind_url.parse()?)
