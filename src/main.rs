@@ -29,7 +29,7 @@ async fn main() -> anyhow::Result<()> {
 
     let app = Router::new()
         .route("/api/games/:id", get(show_game_status))
-        .route("/api/guess/:id/", post(guess_post))
+        .route("/api/guess/:id", post(guess_post))
         .route("/api/create", post(game_create_post))
         .layer(Extension(client));
 
