@@ -150,8 +150,8 @@ pub enum Match {
 fn check_guess(input: String, solution: String) -> GuessResult {
     assert_eq!(input.len(), solution.len());
 
-    let input_str = input;
-    let input = input_str.as_bytes();
+    let solution_str = solution.clone();
+    let input = input.as_bytes();
     let mut solution = solution.into_bytes();
 
     let mut diff = std::iter::repeat(Match::Wrong)
@@ -177,7 +177,7 @@ fn check_guess(input: String, solution: String) -> GuessResult {
         }
     }
     GuessResult {
-        hash: input_str,
+        hash: solution_str,
         guess: diff,
     }
 }
