@@ -49,6 +49,7 @@ pub async fn get_game_info(redis: Arc<RedisClient>, game_id: Uuid) -> Result<Gam
 pub struct GuessResult {
     pub hash: String,
     pub guess: Vec<Match>,
+    pub key: Option<String>,
 }
 
 pub async fn create_game(redis: Arc<RedisClient>) -> Result<GameCreationInfo, AppError> {
@@ -176,8 +177,14 @@ fn check_guess(input: String, solution: String) -> GuessResult {
             diff[i] = Match::Close;
         }
     }
+    let key = if diff.iter().all(|value| value == &Match::Exact) {
+        Some("31abhtykwu".into())
+    } else {
+        None
+    };
     GuessResult {
         hash: solution_str,
         guess: diff,
+        key,
     }
 }
