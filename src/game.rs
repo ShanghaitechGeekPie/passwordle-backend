@@ -130,7 +130,7 @@ pub async fn make_guess(
             if guess.len() != password.len() {
                 return Err(AppError::BadRequest);
             }
-            Ok(check_guess(password, guess))
+            Ok(check_guess(guess, password))
         }
     } else {
         Err(AppError::GameNotFound)
@@ -151,8 +151,8 @@ pub enum Match {
 fn check_guess(input: String, solution: String) -> GuessResult {
     assert_eq!(input.len(), solution.len());
 
-    let solution_str = solution.clone();
-    let input = input.as_bytes();
+    let input_str = input;
+    let input = input_str.as_bytes();
     let mut solution = solution.into_bytes();
 
     let mut diff = std::iter::repeat(Match::Wrong)
@@ -183,7 +183,7 @@ fn check_guess(input: String, solution: String) -> GuessResult {
         None
     };
     GuessResult {
-        hash: solution_str,
+        hash: input_str,
         guess: diff,
         key,
     }
