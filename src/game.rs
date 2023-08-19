@@ -72,6 +72,8 @@ pub async fn create_game(redis: Arc<RedisClient>) -> Result<GameCreationInfo, Ap
     let password = encode(hasher.finalize());
     let uuid = Uuid::from_bytes(rng.gen());
 
+    println!("The answer for the game {} is {}", uuid, password);
+
     let mut conn = redis
         .get_async_connection()
         .await
@@ -178,7 +180,7 @@ fn check_guess(input: String, solution: String) -> GuessResult {
         }
     }
     let key = if diff.iter().all(|value| value == &Match::Exact) {
-        Some("31abhtykwu".into())
+        Some("You did it!".into())
     } else {
         None
     };
