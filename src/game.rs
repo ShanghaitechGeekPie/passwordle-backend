@@ -66,13 +66,13 @@ pub async fn create_game(redis: Arc<RedisClient>) -> Result<GameCreationInfo, Ap
             .collect(),
     )
     .unwrap();
+    let uuid = Uuid::from_bytes(rng.gen());
+    println!("The answer for the game {} is {}", uuid, password);
+
     let mut hasher = Md5::new();
     hasher.update(password.as_bytes());
     hasher.update(salt.as_bytes());
     let password = encode(hasher.finalize());
-    let uuid = Uuid::from_bytes(rng.gen());
-
-    println!("The answer for the game {} is {}", uuid, password);
 
     let mut conn = redis
         .get_async_connection()
